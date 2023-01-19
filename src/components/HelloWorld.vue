@@ -13,9 +13,6 @@ export default {
    }
   },
   mounted:  async function () {
-    console.log("Created");
-    console.log(import.meta.env)
-
     await this.loadCount();
   },
   methods:{
