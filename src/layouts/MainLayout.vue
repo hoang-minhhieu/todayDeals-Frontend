@@ -1,38 +1,54 @@
+<!-- Notice lang="scss" -->
+<style lang="scss">
+.q-header {
+  display: flex;
+  justify-content: center;
+  background-color: black;
+}
+
+.accountBtn {
+  margin: 10px;
+}
+
+.searchBar {
+  background-color: white;
+  margin: 10px;
+}
+</style>
+
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title> Mua Tiết Kiệm </q-toolbar-title>
-      </q-toolbar>
-
       <q-tabs v-model="tab">
-        <q-tab name="images" label="Images" />
-        <q-tab name="videos" label="Videos" />
-        <q-tab name="articles" label="Articles" />
+        <q-tab name="images" label="Khuyến mãi" />
+        <q-tab name="videos" label="Mã giảm giá" />
+        <q-tab name="articles" label="Miễn phí" />
       </q-tabs>
+
+      <q-input
+        standout
+        v-model="text"
+        placeholder="Tìm kiếm"
+        :class="'searchBar'"
+      >
+        <template v-slot:prepend>
+          <q-icon name="search" color="gray" />
+        </template>
+        <template v-slot:append>
+          <q-icon
+            name="close"
+            @click="text = ''"
+            class="cursor-pointer"
+            color="gray"
+          />
+        </template>
+      </q-input>
+
+      <q-btn :class="'accountBtn'" color="grey">
+        <q-icon name="person" />
+        <div>Đăng nhập</div>
+      </q-btn>
     </q-header>
-
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
-
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -41,70 +57,16 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import EssentialLink from 'components/EssentialLink.vue';
-
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
-  },
-];
 
 export default defineComponent({
   name: 'MainLayout',
 
-  components: {
-    EssentialLink,
-  },
+  components: {},
 
   setup() {
-    const leftDrawerOpen = ref(false);
-
     return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
       tab: ref('images'),
-      toggleLeftDrawer() {
-        leftDrawerOpen.value = !leftDrawerOpen.value;
-      },
+      text: ref(''),
     };
   },
 });
