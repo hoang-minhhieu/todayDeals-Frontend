@@ -7,12 +7,17 @@
   height: 60px;
 }
 
-.accountBtn {
+.navbarBtn {
   margin: 10px;
+  font-size: 0.9em;
 }
 
 .searchBar {
   margin: 10px;
+}
+
+.q-tabs .q-tab__label {
+  font-size: 0.9em;
 }
 </style>
 
@@ -20,7 +25,7 @@
   <q-layout view="hHh lpR fFf">
     <q-header class="bg-primary text-white">
       <div class="header">
-        <q-tabs>
+        <q-tabs no-caps>
           <q-tab name="images" label="Khuyến mãi" />
           <q-tab name="videos" label="Mã giảm giá" />
           <q-tab name="articles" label="Miễn phí" />
@@ -50,7 +55,28 @@
           </template>
         </q-input>
 
-        <q-btn :class="'accountBtn'" color="blue">
+        <q-btn-dropdown
+          no-caps
+          :class="'navbarBtn'"
+          label="Ngôn ngữ"
+          icon="language"
+        >
+          <q-list>
+            <q-item clickable v-close-popup @click="onItemClick">
+              <q-item-section>
+                <q-item-label>Tiếng Việt</q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item clickable v-close-popup @click="onItemClick">
+              <q-item-section>
+                <q-item-label>English</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-btn-dropdown>
+
+        <q-btn no-caps :class="'navbarBtn'" color="primary">
           <q-icon name="person" />
           <div>Đăng nhập</div>
         </q-btn>
@@ -85,6 +111,9 @@ export default defineComponent({
   setup() {
     return {
       search: ref(''),
+      onItemClick() {
+        // console.log('Clicked on an Item')
+      },
     };
   },
 });
