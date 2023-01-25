@@ -1,3 +1,9 @@
+<style>
+.q-page {
+  background-color: #e3e6e6;
+}
+</style>
+
 <template>
   <q-page class="row items-center justify-evenly">
     <example-component

@@ -2,7 +2,9 @@
 <style lang="scss">
 .header {
   display: flex;
-  justify-content: center;
+  margin-right: auto;
+  margin-left: auto;
+  width: 1200px;
   background-color: black;
   height: 60px;
 }
@@ -16,74 +18,100 @@
   margin: 10px;
 }
 
-.q-tabs .q-tab__label {
-  font-size: 0.9em;
+.right-side-navbar {
+  margin-left: auto;
+  display: flex;
+  .q-input {
+    width: 400px;
+  }
+}
+
+.q-tabs {
+  .q-tab__label {
+    font-size: 0.9em;
+  }
+}
+
+.subNavBar {
+  width: 1200px;
+  margin-right: auto;
+  margin-left: auto;
+  display: -webkit-box;
 }
 </style>
 
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header class="bg-primary text-white">
+    <q-header class="bg-black text-white">
       <div class="header">
         <q-tabs no-caps>
           <q-tab name="images" label="Khuyến mãi" />
           <q-tab name="videos" label="Mã giảm giá" />
           <q-tab name="articles" label="Miễn phí" />
+          <q-tab name="events" label="Sự kiện" />
+          <q-tab name="forum" label="Diễn đàn" />
         </q-tabs>
 
-        <q-input
-          v-model="search"
-          debounce="500"
-          outlined
-          color="navy"
-          bg-color="white"
-          rounded
-          placeholder="Tìm kiếm"
-          :class="'searchBar'"
-          dense
-        >
-          <template v-slot:prepend>
-            <q-icon name="search" color="gray" />
-          </template>
-          <template v-slot:append>
-            <q-icon
-              name="close"
-              @click="search = ''"
-              class="cursor-pointer"
-              color="gray"
-            />
-          </template>
-        </q-input>
+        <div :class="'right-side-navbar'">
+          <q-input
+            v-model="search"
+            debounce="500"
+            outlined
+            color="navy"
+            bg-color="white"
+            rounded
+            placeholder="Tìm kiếm"
+            :class="'searchBar'"
+            dense
+          >
+            <template v-slot:prepend>
+              <q-icon name="search" color="gray" />
+            </template>
+            <template v-slot:append>
+              <q-icon
+                name="close"
+                @click="search = ''"
+                class="cursor-pointer"
+                color="gray"
+              />
+            </template>
+          </q-input>
 
-        <q-btn-dropdown
-          no-caps
-          :class="'navbarBtn'"
-          label="Ngôn ngữ"
-          icon="language"
-        >
-          <q-list>
-            <q-item clickable v-close-popup @click="onItemClick">
-              <q-item-section>
-                <q-item-label>Tiếng Việt</q-item-label>
-              </q-item-section>
-            </q-item>
+          <q-btn-dropdown
+            no-caps
+            :class="'navbarBtn'"
+            label="Ngôn ngữ"
+            icon="language"
+          >
+            <q-list>
+              <q-item clickable v-close-popup @click="onItemClick">
+                <q-item-section>
+                  <q-item-label>Tiếng Việt</q-item-label>
+                </q-item-section>
+              </q-item>
 
-            <q-item clickable v-close-popup @click="onItemClick">
-              <q-item-section>
-                <q-item-label>English</q-item-label>
-              </q-item-section>
-            </q-item>
-          </q-list>
-        </q-btn-dropdown>
+              <q-item clickable v-close-popup @click="onItemClick">
+                <q-item-section>
+                  <q-item-label>English</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
 
-        <q-btn no-caps :class="'navbarBtn'" color="primary">
-          <q-icon name="person" />
-          <div>Đăng nhập</div>
-        </q-btn>
+          <q-btn no-caps :class="'navbarBtn'" color="primary">
+            <q-icon name="person" />
+            <div>Đăng nhập</div>
+          </q-btn>
+        </div>
       </div>
     </q-header>
 
     <q-page-container>
+      <q-tabs no-caps :class="'subNavBar'">
+        <q-tab name="images" label="Mới" />
+        <q-tab name="videos" label="Được chú ý" />
+        <q-tab name="articles" label="Đang bình luận" />
+      </q-tabs>
       <router-view />
     </q-page-container>
 
