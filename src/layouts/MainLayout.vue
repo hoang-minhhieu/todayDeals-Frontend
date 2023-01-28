@@ -21,9 +21,6 @@
 .right-side-navbar {
   margin-left: auto;
   display: flex;
-  .q-input {
-    width: 400px;
-  }
 }
 
 .q-tabs {
@@ -32,11 +29,19 @@
   }
 }
 
-.subNavBar {
-  width: 1200px;
-  margin-right: auto;
-  margin-left: auto;
-  display: -webkit-box;
+.searchBar {
+  width: 300px;
+}
+
+.fi {
+  margin-right: 10px;
+}
+
+.q-item__section {
+  display: contents;
+}
+.q-item__label {
+  align-self: center;
 }
 </style>
 
@@ -52,31 +57,31 @@
           <q-tab name="forum" label="Diễn đàn" />
         </q-tabs>
 
-        <div :class="'right-side-navbar'">
-          <q-input
-            v-model="search"
-            debounce="500"
-            outlined
-            color="navy"
-            bg-color="white"
-            rounded
-            placeholder="Tìm kiếm"
-            :class="'searchBar'"
-            dense
-          >
-            <template v-slot:prepend>
-              <q-icon name="search" color="gray" />
-            </template>
-            <template v-slot:append>
-              <q-icon
-                name="close"
-                @click="search = ''"
-                class="cursor-pointer"
-                color="gray"
-              />
-            </template>
-          </q-input>
+        <q-input
+          v-model="search"
+          debounce="500"
+          outlined
+          color="navy"
+          bg-color="white"
+          rounded
+          placeholder="Tìm kiếm"
+          :class="'searchBar'"
+          dense
+        >
+          <template v-slot:prepend>
+            <q-icon name="search" color="gray" />
+          </template>
+          <template v-slot:append>
+            <q-icon
+              name="close"
+              @click="search = ''"
+              class="cursor-pointer"
+              color="gray"
+            />
+          </template>
+        </q-input>
 
+        <div :class="'right-side-navbar'">
           <q-btn-dropdown
             no-caps
             :class="'navbarBtn'"
@@ -86,12 +91,14 @@
             <q-list>
               <q-item clickable v-close-popup @click="onItemClick">
                 <q-item-section>
+                  <span class="fi fi-vn"></span>
                   <q-item-label>Tiếng Việt</q-item-label>
                 </q-item-section>
               </q-item>
 
               <q-item clickable v-close-popup @click="onItemClick">
                 <q-item-section>
+                  <span class="fi fi-gb"></span>
                   <q-item-label>English</q-item-label>
                 </q-item-section>
               </q-item>
@@ -107,11 +114,6 @@
     </q-header>
 
     <q-page-container>
-      <q-tabs no-caps :class="'subNavBar'">
-        <q-tab name="images" label="Mới" />
-        <q-tab name="videos" label="Được chú ý" />
-        <q-tab name="articles" label="Đang bình luận" />
-      </q-tabs>
       <router-view />
     </q-page-container>
 
@@ -130,6 +132,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
+import '/node_modules/flag-icons/css/flag-icons.min.css';
 
 export default defineComponent({
   name: 'MainLayout',
@@ -138,7 +141,10 @@ export default defineComponent({
 
   setup() {
     return {
+      model: ref(null),
+
       search: ref(''),
+      right: ref(false),
       onItemClick() {
         // console.log('Clicked on an Item')
       },
