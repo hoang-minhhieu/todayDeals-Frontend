@@ -9,18 +9,44 @@
 
 .right-subNavBar {
   display: flex;
-  margin-left: auto;
-  width: 1200px;
+  width: 65vw;
 }
 
 .select-subNavBar {
   width: 200px;
   align-self: center;
-  margin: 10px 0;
+  margin: 10px 15px 10px 0;
 }
 
-.q-checkbox {
-  margin-right: 10px;
+.side-panel-area {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.left-panel-area {
+  background: red;
+  width: 25%;
+  height: 501px;
+  position: sticky;
+  top: 0;
+  margin-top: 60px;
+}
+
+.main-area {
+  display: flex;
+  margin-top: 60px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.right-panel-area {
+  background: green;
+  width: 25%;
+  height: 501px;
+  position: sticky;
+  top: 0;
+  margin-top: 60px;
 }
 
 .list-cities div.q-field__native span {
@@ -31,15 +57,20 @@
 </style>
 
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page class="full-width row justify-center" style="height: 1500px">
+    <div style="width: 65vw; display: flex">
+      <div class="left-panel-area">
+        <CategorieComponent></CategorieComponent>
+      </div>
+      <div class="main-area">
+        <DealsCardComponent> </DealsCardComponent>
+      </div>
+      <div class="right-panel-area">
+        <HighlightComponent></HighlightComponent>
+      </div>
+    </div>
 
-    <q-page-sticky expand position="top" :class="'subNavBar'">
+    <!-- <q-page-sticky expand position="top" :class="'subNavBar'">
       <div :class="'right-subNavBar'">
         <div :class="'select-subNavBar'">
           <q-select
@@ -60,13 +91,14 @@
         </div>
         <q-checkbox v-model="right" label="Ẩn hết hạn" />
       </div>
-    </q-page-sticky>
+    </q-page-sticky> -->
   </q-page>
 </template>
 
 <script lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/ExampleComponent.vue';
+import DealsCardComponent from 'src/components/DealsCardComponent.vue';
+import CategorieComponent from 'src/components/CategorieComponent.vue';
+import HighlightComponent from 'src/components/HighlightComponent.vue';
 import { defineComponent, ref } from 'vue';
 
 const cities = [
@@ -82,38 +114,12 @@ const dealsType = ['Mới nhất', 'Được chú ý', 'Đang bình luận'];
 
 export default defineComponent({
   name: 'IndexPage',
-  components: { ExampleComponent },
+  components: { CategorieComponent, DealsCardComponent, HighlightComponent },
   setup() {
     const list_cities = ref(cities);
     const list_deals_types = ref(dealsType);
-    const todos = ref<Todo[]>([
-      {
-        id: 1,
-        content: 'ct1',
-      },
-      {
-        id: 2,
-        content: 'ct2',
-      },
-      {
-        id: 3,
-        content: 'ct3',
-      },
-      {
-        id: 4,
-        content: 'ct4',
-      },
-      {
-        id: 5,
-        content: 'ct5',
-      },
-    ]);
-    const meta = ref<Meta>({
-      totalCount: 1200,
-    });
+
     return {
-      todos,
-      meta,
       right: ref(false),
       modelCities: ref(['Toàn quốc']),
       modelDealsType: ref('Mới nhất'),

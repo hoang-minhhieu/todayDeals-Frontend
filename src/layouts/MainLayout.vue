@@ -4,7 +4,7 @@
   display: flex;
   margin-right: auto;
   margin-left: auto;
-  width: 1200px;
+  width: 65vw;
   background-color: black;
   height: 60px;
 }
@@ -47,7 +47,7 @@
 
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header class="bg-black text-white">
+    <q-header class="bg-black text-white" style="position: fixed">
       <div class="header">
         <q-tabs no-caps>
           <q-tab name="images" label="Khuyến mãi" />
