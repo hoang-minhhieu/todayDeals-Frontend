@@ -25,28 +25,21 @@
 
 .left-panel-area {
   background: red;
-  width: 25%;
+  width: 15%;
   height: 501px;
-  position: sticky;
-  top: 0;
-  margin-top: 60px;
 }
 
 .main-area {
   display: flex;
-  margin-top: 60px;
-  width: 50%;
+  width: 70%;
   margin-left: auto;
   margin-right: auto;
 }
 
 .right-panel-area {
   background: green;
-  width: 25%;
+  width: 15%;
   height: 501px;
-  position: sticky;
-  top: 0;
-  margin-top: 60px;
 }
 
 .list-cities div.q-field__native span {
