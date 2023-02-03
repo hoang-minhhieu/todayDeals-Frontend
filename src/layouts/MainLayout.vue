@@ -135,7 +135,7 @@
     <q-page-container>
       <q-page class="full-height" id="page" style="display: flex">
         <div class="left-side">
-          <CategorieComponent></CategorieComponent>
+          <FilterDealsComponent></FilterDealsComponent>
         </div>
         <div class="center-side">
           <div name="tab1" :style="heightStyle">
@@ -159,13 +159,13 @@
 </template>
 
 <script>
-import CategorieComponent from '../components/CategorieComponent.vue';
+import FilterDealsComponent from '../components/FilterDealsComponent.vue';
 import DealsCardComponent from '../components/DealsCardComponent.vue';
 import HighlightComponent from '../components/HighlightComponent.vue';
 export default {
   name: 'MainLayout',
 
-  components: { CategorieComponent, DealsCardComponent, HighlightComponent },
+  components: { FilterDealsComponent, DealsCardComponent, HighlightComponent },
   mounted() {
     this.setHeight();
   },

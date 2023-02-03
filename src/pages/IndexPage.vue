@@ -53,7 +53,7 @@
   <q-page class="full-width row justify-center" style="height: 1500px">
     <div style="width: 65vw; display: flex">
       <div class="left-panel-area">
-        <CategorieComponent></CategorieComponent>
+        <FilterDealsComponent></FilterDealsComponent>
       </div>
       <div class="main-area">
         <DealsCardComponent> </DealsCardComponent>
@@ -90,7 +90,7 @@
 
 <script lang="ts">
 import DealsCardComponent from 'src/components/DealsCardComponent.vue';
-import CategorieComponent from 'src/components/CategorieComponent.vue';
+import FilterDealsComponent from 'src/components/FilterDealsComponent.vue';
 import HighlightComponent from 'src/components/HighlightComponent.vue';
 import { defineComponent, ref } from 'vue';
 
@@ -107,7 +107,7 @@ const dealsType = ['Mới nhất', 'Được chú ý', 'Đang bình luận'];
 
 export default defineComponent({
   name: 'IndexPage',
-  components: { CategorieComponent, DealsCardComponent, HighlightComponent },
+  components: { FilterDealsComponent, DealsCardComponent, HighlightComponent },
   setup() {
     const list_cities = ref(cities);
     const list_deals_types = ref(dealsType);
