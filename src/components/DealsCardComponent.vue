@@ -5,28 +5,30 @@
 </style>
 
 <template>
-  <q-infinite-scroll @load="onLoad" :offset="250">
-    <div v-for="(item, index) in items" :key="index" class="caption">
-      <div class="cards-area">
-        <q-card class="my-card" flat bordered>
-          <q-card-section horizontal>
-            <q-img
-              class="col-3"
-              src="https://cdn.quasar.dev/img/parallax2.jpg"
-            />
-            <q-card-section>
-              {{ lorem }}
+  <q-scroll-area class="fit">
+    <q-infinite-scroll @load="onLoad" :offset="250">
+      <div v-for="(item, index) in items" :key="index" class="caption">
+        <div class="cards-area">
+          <q-card class="my-card" flat bordered>
+            <q-card-section horizontal>
+              <q-img
+                class="col-3"
+                src="https://cdn.quasar.dev/img/parallax2.jpg"
+              />
+              <q-card-section>
+                {{ lorem }}
+              </q-card-section>
             </q-card-section>
-          </q-card-section>
-        </q-card>
+          </q-card>
+        </div>
       </div>
-    </div>
-    <template v-slot:loading>
-      <div class="row justify-center q-my-md">
-        <q-spinner-dots color="primary" size="40px" />
-      </div>
-    </template>
-  </q-infinite-scroll>
+      <template v-slot:loading>
+        <div class="row justify-center q-my-md">
+          <q-spinner-dots color="primary" size="40px" />
+        </div>
+      </template>
+    </q-infinite-scroll>
+  </q-scroll-area>
 </template>
 
 <script lang="ts">
@@ -41,7 +43,7 @@ export default defineComponent({
     const items = ref([{}, {}, {}, {}, {}, {}, {}]);
     return {
       items,
-      onLoad(index: any, done: () => void) {
+      onLoad(index: number, done: () => void) {
         setTimeout(() => {
           items.value.push({}, {}, {}, {}, {}, {}, {});
           done();

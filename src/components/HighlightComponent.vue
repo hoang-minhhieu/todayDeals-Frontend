@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <div class="highlight-area">My component</div>
+  <div class="highlight-area">Right Panel</div>
 </template>
 
 <script lang="ts">
