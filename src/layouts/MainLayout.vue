@@ -1,29 +1,79 @@
-<!-- Notice lang="scss" -->
 <style lang="scss">
 .header {
   display: flex;
-  justify-content: center;
+  margin-right: auto;
+  margin-left: auto;
+  width: 65vw;
   background-color: black;
   height: 60px;
 }
 
-.accountBtn {
+.navbarBtn {
   margin: 10px;
+  font-size: 0.9em;
 }
 
 .searchBar {
   margin: 10px;
 }
+
+.right-side-navbar {
+  margin-left: auto;
+  display: flex;
+}
+
+.q-tabs {
+  .q-tab__label {
+    font-size: 0.9em;
+  }
+}
+
+.searchBar {
+  width: 300px;
+}
+
+.fi {
+  margin-right: 10px;
+}
+
+.q-page-container {
+  width: 65vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.q-item__section {
+  display: contents;
+}
+
+.q-item__label {
+  align-self: center;
+}
+
+.left-side,
+.right-side {
+  background: lightgray;
+  width: 25%;
+  margin: 5px 0;
+}
+
+.center-side {
+  background: lightgray;
+  width: 50%;
+  margin: 5px;
+}
 </style>
 
 <template>
   <q-layout view="hHh lpR fFf">
-    <q-header class="bg-primary text-white">
+    <q-header class="bg-black text-white">
       <div class="header">
-        <q-tabs>
+        <q-tabs no-caps>
           <q-tab name="images" label="Khuyến mãi" />
           <q-tab name="videos" label="Mã giảm giá" />
           <q-tab name="articles" label="Miễn phí" />
+          <q-tab name="events" label="Sự kiện" />
+          <q-tab name="forum" label="Diễn đàn" />
         </q-tabs>
 
         <q-input
@@ -50,23 +100,57 @@
           </template>
         </q-input>
 
-        <q-btn :class="'accountBtn'" color="blue">
-          <q-icon name="person" />
-          <div>Đăng nhập</div>
-        </q-btn>
+        <div :class="'right-side-navbar'">
+          <q-btn-dropdown
+            no-caps
+            :class="'navbarBtn'"
+            label="Ngôn ngữ"
+            icon="language"
+          >
+            <q-list>
+              <q-item clickable v-close-popup @click="onItemClick">
+                <q-item-section>
+                  <span class="fi fi-vn"></span>
+                  <q-item-label>Tiếng Việt</q-item-label>
+                </q-item-section>
+              </q-item>
+
+              <q-item clickable v-close-popup @click="onItemClick">
+                <q-item-section>
+                  <span class="fi fi-gb"></span>
+                  <q-item-label>English</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-btn-dropdown>
+
+          <q-btn no-caps :class="'navbarBtn'" color="primary">
+            <q-icon name="person" />
+            <div>Đăng nhập</div>
+          </q-btn>
+        </div>
       </div>
     </q-header>
 
     <q-page-container>
-      <router-view />
+      <q-page class="full-height" id="page" style="display: flex">
+        <div class="left-side">
+          <CategorieComponent></CategorieComponent>
+        </div>
+        <div class="center-side">
+          <div name="tab1" :style="heightStyle">
+            <DealsCardComponent></DealsCardComponent>
+          </div>
+        </div>
+        <div class="right-side">
+          <HighlightComponent></HighlightComponent>
+        </div>
+      </q-page>
     </q-page-container>
 
     <q-footer class="bg-grey-8 text-white">
       <q-toolbar>
         <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg" />
-          </q-avatar>
           <div>Title</div>
         </q-toolbar-title>
       </q-toolbar>
@@ -74,18 +158,28 @@
   </q-layout>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-
-export default defineComponent({
+<script>
+import CategorieComponent from '../components/CategorieComponent.vue';
+import DealsCardComponent from '../components/DealsCardComponent.vue';
+import HighlightComponent from '../components/HighlightComponent.vue';
+export default {
   name: 'MainLayout',
 
-  components: {},
-
-  setup() {
+  components: { CategorieComponent, DealsCardComponent, HighlightComponent },
+  mounted() {
+    this.setHeight();
+  },
+  methods: {
+    setHeight() {
+      const panelTop = document.getElementById('page').offsetTop;
+      const panelHeight = window.innerHeight - panelTop - 60;
+      this.heightStyle = 'height: ' + panelHeight + 'px';
+    },
+  },
+  data() {
     return {
-      search: ref(''),
+      heightStyle: '',
     };
   },
-});
+};
 </script>
