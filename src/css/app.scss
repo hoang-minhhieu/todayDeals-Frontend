@@ -1,1 +1,17 @@
 // app global css in SCSS form
+.q-page {
+  background-color: #e3e6e6;
+}
+
+.q-item {
+  padding: 0 0 0 15px;
+  .q-icon {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+  }
+}
+
+.q-input .q-placeholder {
+  margin-left: 15px;
+}

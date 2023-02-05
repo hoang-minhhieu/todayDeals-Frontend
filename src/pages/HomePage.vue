@@ -1,4 +1,4 @@
-<style lang="scss">
+<style scoped lang="scss">
 .header {
   display: flex;
   margin-right: auto;
@@ -23,6 +23,7 @@
 }
 
 .q-tabs {
+  background-color: #f7941d;
   .q-tab__label {
     font-size: 0.9em;
   }
@@ -50,22 +51,28 @@
   align-self: center;
 }
 
-.left-side,
-.right-side {
-  background: lightgray;
-  width: 25%;
+.left-side {
+  background: white;
+  width: 20%;
   margin: 5px 0;
+  height: fit-content;
+}
+.right-side {
+  background: white;
+  width: 30%;
+  margin: 5px 0;
+  height: fit-content;
 }
 
 .center-side {
-  background: lightgray;
+  background: white;
   width: 50%;
   margin: 5px;
 }
 </style>
 
 <template>
-  <q-layout view="hHh lpR fFf">
+  <q-layout view="hHh lpR fFf" style="background: #e3e6e6">
     <q-header class="bg-black text-white">
       <div class="header">
         <q-tabs no-caps>
@@ -135,7 +142,7 @@
     <q-page-container>
       <q-page class="full-height" id="page" style="display: flex">
         <div class="left-side">
-          <CategorieComponent></CategorieComponent>
+          <FilterDealsComponent></FilterDealsComponent>
         </div>
         <div class="center-side">
           <div name="tab1" :style="heightStyle">
@@ -159,13 +166,13 @@
 </template>
 
 <script>
-import CategorieComponent from '../components/CategorieComponent.vue';
+import FilterDealsComponent from '../components/FilterDealsComponent.vue';
 import DealsCardComponent from '../components/DealsCardComponent.vue';
 import HighlightComponent from '../components/HighlightComponent.vue';
 export default {
   name: 'MainLayout',
 
-  components: { CategorieComponent, DealsCardComponent, HighlightComponent },
+  components: { FilterDealsComponent, DealsCardComponent, HighlightComponent },
   mounted() {
     this.setHeight();
   },
@@ -178,6 +185,7 @@ export default {
   },
   data() {
     return {
+      search: '',
       heightStyle: '',
     };
   },
