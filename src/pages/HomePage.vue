@@ -53,21 +53,22 @@
 
 .left-side {
   background: white;
-  width: 20%;
-  margin: 5px 0;
-  height: fit-content;
-}
-.right-side {
-  background: white;
-  width: 30%;
+  width: 15%;
   margin: 5px 0;
   height: fit-content;
 }
 
 .center-side {
   background: white;
-  width: 50%;
+  width: 65%;
   margin: 5px;
+}
+
+.right-side {
+  background: white;
+  width: 20%;
+  margin: 5px 0;
+  height: fit-content;
 }
 </style>
 
