@@ -1,11 +1,11 @@
 <template>
-  <q-expansion-item expand-separator label="Thành phố">
+  <q-expansion-item expand-separator label="Tỉnh thành">
     <q-card>
       <q-list bordered separator>
         <q-input
           type="text"
           color="primary"
-          placeholder="Nhập tên thành phố cần tìm..."
+          placeholder="Nhập tên tỉnh thành cần tìm..."
           v-model="searchTerm"
           clearable
         />
@@ -13,10 +13,10 @@
           class="q-item"
           tag="label"
           v-ripple
-          v-for="x in visibleCities"
+          v-for="x in visibleProvinces"
           :key="x"
         >
-          <q-checkbox v-model="selectedCities[x].selected" />
+          <q-checkbox v-model="selectedProvinces[x].selected" />
           <q-item-section>
             <q-item-label>{{ x }}</q-item-label>
           </q-item-section>
@@ -35,38 +35,40 @@
 
 <script>
 import { defineComponent, ref, computed } from 'vue';
-import { cities } from '../constants/constants';
+import { provinces } from '../constants/constants';
 
 export default defineComponent({
-  name: 'FilterByCityComponent',
+  name: 'FilterByProvinceComponent',
   setup() {
-    const listCities = ref(cities);
+    const listProvinces = ref(provinces);
     const showAll = ref(false);
-    const selectedCities = ref(
-      listCities.value.reduce((acc, city) => {
-        acc[city] = { selected: false };
+    const selectedProvinces = ref(
+      listProvinces.value.reduce((acc, province) => {
+        acc[province] = { selected: false };
         return acc;
       }, {}),
     );
     const searchTerm = ref('');
 
-    const filteredCities = computed(() => {
-      if (!searchTerm.value) return listCities.value;
-      return listCities.value.filter(city =>
-        city.toLowerCase().includes(searchTerm.value.toLowerCase()),
+    const filteredProvinces = computed(() => {
+      if (!searchTerm.value) return listProvinces.value;
+      return listProvinces.value.filter(province =>
+        province.toLowerCase().includes(searchTerm.value.toLowerCase()),
       );
     });
-    const visibleCities = computed(() => {
+
+    const visibleProvinces = computed(() => {
       return showAll.value
-        ? listCities.value
-        : filteredCities.value.slice(0, 5);
+        ? listProvinces.value
+        : filteredProvinces.value.slice(0, 5);
     });
+
     return {
-      listCities,
-      selectedCities,
-      visibleCities,
+      listProvinces,
+      selectedProvinces,
+      visibleProvinces,
       showAll,
-      filteredCities,
+      filteredProvinces,
       searchTerm,
     };
   },

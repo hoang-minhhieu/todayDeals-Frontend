@@ -1,7 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-const cities = [
+export const trends = ['Mới nhất', 'Đáng chú ý', 'Đang bình luận'];
+
+export const cities = [
+  'Nước ngoài',
   'Hà Nội',
-  'TP.Hồ Chí Minh',
+  'TP. Hồ Chí Minh',
   'Cần Thơ',
   'Đà Nẵng',
   'Hải Phòng',
@@ -17,11 +20,13 @@ const cities = [
   'Rạch Giá',
   'Hải Dương',
   'Quảng Ninh',
+  'Khác',
 ];
 
-const provinces = [
+export const provinces = [
+  'Nước ngoài',
   'Hà Nội',
-  'TP.Hồ Chí Minh',
+  'TP. Hồ Chí Minh',
   'Cần Thơ',
   'Đà Nẵng',
   'Hải Phòng',
@@ -85,4 +90,27 @@ const provinces = [
   'Sóc Trăng',
   'Tây Ninh',
   'Yên Bái',
+];
+
+export const merchants = [
+  'Shopee',
+  'Lazada',
+  'Tiki',
+  'Amazon',
+  'eBay',
+  'Taobao',
+  'AliExpress',
+];
+
+export const categories = [
+  'Thời trang & phụ kiện',
+  'Sức khỏe và làm đẹp',
+  'Thiết bị điện tử',
+  'TV & Thiết bị điên gia dụng',
+  'Nội thất',
+  'Thể thao & Du lịch',
+  'Thực phẩm',
+  'Gói cước điện thoại & Internet',
+  'Dịch vụ',
+  'Ôtô, xe máy & thiết bị định vị',
 ];
