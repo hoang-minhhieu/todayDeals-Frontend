@@ -1,4 +1,4 @@
-<style scoped>
+<style scoped lang="scss">
 .cardContents {
   display: grid;
   grid-template-rows: 1fr 1fr 1.5fr 1fr;
@@ -91,6 +91,11 @@
 
 .my-card {
   height: 220px;
+}
+
+.q-card--bordered {
+  border: 3px solid rgba(0, 0, 0, 0.12);
+  border-radius: 5px;
 }
 </style>
 <template>

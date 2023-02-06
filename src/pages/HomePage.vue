@@ -59,7 +59,7 @@
 }
 
 .center-side {
-  background: white;
+  background: $bgColor;
   width: 60%;
   margin: 5px;
 }
