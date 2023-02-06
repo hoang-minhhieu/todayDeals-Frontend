@@ -1,4 +1,9 @@
 <style scoped>
+.cardContents {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1.5fr 1fr;
+}
+
 .voteDeals {
   border: 2px solid black;
   width: fit-content;
@@ -21,8 +26,71 @@
   padding: 0;
 }
 
+.author {
+  align-self: center;
+  display: flex;
+}
+
+.timeDiff {
+  align-self: center;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  grid-row: 1;
+}
+
+.prices {
+  display: flex;
+  font-size: 1.3rem;
+  align-items: center;
+  align-self: center;
+  margin-bottom: 10px;
+  grid-row: 2;
+}
+
+.discountPrice {
+  font-weight: 500;
+  background: #f7941d;
+  display: inline-block;
+  color: #fff;
+  padding: 2px 18px;
+  border-radius: 30px;
+}
+
+.fullPrice {
+  text-decoration: line-through;
+  color: grey;
+  margin: 0 10px;
+}
+
+.discountPercentage {
+}
+
+.shipmentCost {
+  display: flex;
+  margin-left: 10px;
+}
+
+.description {
+  grid-row: 3;
+}
+
+.lastRowBtns {
+  display: flex;
+  grid-row: 4;
+}
+
+.expireDate {
+  align-self: center;
+  color: red;
+  font-weight: bold;
+  margin-left: auto;
+}
+
 .my-card {
-  height: 230px;
+  height: 220px;
 }
 </style>
 <template>
@@ -30,49 +98,82 @@
     <q-infinite-scroll @load="onLoad" :offset="250">
       <div v-for="(item, index) in items" :key="index" class="caption">
         <div class="cards-area">
-          <q-card class="my-card" flat bordered>
-            <q-card-section horizontal>
+          <q-card flat bordered>
+            <q-card-section class="my-card" horizontal>
               <q-card-section class="col-3">
-                <q-img src="https://cdn.quasar.dev/img/parallax2.jpg" />
-                <div>Đăng bởi {{ author }} {{ today }}</div>
+                <q-img
+                  src="https://cdn.quasar.dev/img/parallax2.jpg"
+                  style="position: initial"
+                />
               </q-card-section>
-              <q-card-section class="col-9">
-                <div>
-                  <p>Hết hạn: {{ expire }}</p>
-                  <div class="voteDeals row">
-                    <q-btn
-                      class="voteBtn col-4"
-                      flat
-                      color="primary"
-                      @click="downvote"
-                      icon="ac_unit"
-                    />
-                    <div
-                      class="voteCount col-4"
-                      :style="{ color: voteCount > 0 ? 'red' : '#1976D2' }"
-                    >
-                      {{ voteCount == 0 ? 'Vote' : `${voteCount}°` }}
-                    </div>
-                    <q-btn
-                      class="voteBtn col-4"
-                      flat
-                      color="red"
-                      @click="upvote"
-                      icon="local_fire_department"
-                    />
+              <q-card-section class="col-9 cardContents">
+                <div class="voteDeals row">
+                  <q-btn
+                    class="voteBtn col-4"
+                    flat
+                    color="primary"
+                    @click="downvote"
+                    icon="ac_unit"
+                  />
+                  <div
+                    class="voteCount col-4"
+                    :style="{ color: voteCount > 0 ? 'red' : '#1976D2' }"
+                  >
+                    {{ voteCount == 0 ? 'Vote' : `${voteCount}°` }}
                   </div>
-                  <div>
-                    {{ title }}
+                  <q-btn
+                    class="voteBtn col-4"
+                    flat
+                    color="red"
+                    @click="upvote"
+                    icon="local_fire_department"
+                  />
+                </div>
+                <div class="title">
+                  {{ title }}
+                </div>
+                <div class="prices">
+                  <div class="discountPrice">{{ price_with_discount }}€</div>
+                  <div class="fullPrice">{{ price_without_discount }}€</div>
+                  <div class="discountPercentage">
+                    (Giảm {{ discount_percentage }}%)
                   </div>
-                  <div>
-                    {{ price_with_discount }} {{ price_without_discount }}
+                  <div class="shipmentCost">
+                    <q-icon
+                      name="local_shipping"
+                      style="font-size: xx-large"
+                    ></q-icon
+                    >{{ shipment }}€
                   </div>
-                  <div>
-                    {{ shipment }}
+                </div>
+                <div class="description">
+                  {{ description }}
+                </div>
+                <div class="lastRowBtns">
+                  <div class="author">
+                    <q-chip>
+                      <q-avatar>
+                        <img :src="avatar" />
+                      </q-avatar>
+                      {{ author }}
+                    </q-chip>
+                    <div class="timeDiff">{{ today }}</div>
                   </div>
-                  <div>
-                    {{ description }}
-                  </div>
+                  <div class="expireDate">HSD: {{ expire }}</div>
+                  <q-btn
+                    color="primary"
+                    @click="downvote"
+                    label="Chia sẻ"
+                    icon="share"
+                    style="margin-left: 15px"
+                  />
+                  <q-btn
+                    color="primary"
+                    @click="downvote"
+                    label="Xem thêm"
+                    icon="open_in_new"
+                    style="margin-left: 15px"
+                  />
                 </div>
               </q-card-section>
             </q-card-section>
@@ -103,6 +204,17 @@ export default defineComponent({
       month: '2-digit',
       year: 'numeric',
     });
+    const expire = '05/02/2023';
+    const title = 'Tên sản phẩm';
+    const price_with_discount = 5;
+    const price_without_discount = 10;
+    const shipment = 5;
+    const description = 'This is a description';
+    const author = 'James';
+    const discount_percentage = Math.round(
+      (price_with_discount / price_without_discount) * 100,
+    );
+    const avatar = ref('https://cdn.quasar.dev/img/avatar.png');
 
     function upvote() {
       voteCount.value++;
@@ -123,14 +235,16 @@ export default defineComponent({
           done();
         }, 2000);
       },
-      expire: '05/02/2023',
+      avatar,
+      expire,
       today: today.replace(/(\d+)\/(\d+)\/(\d+)/, '$2/$1/$3'),
-      title: 'Tên sản phẩm',
-      price_with_discount: '5€',
-      price_without_discount: '10€',
-      shipment: '5€',
-      description: 'This is a description',
-      author: 'James',
+      title,
+      price_with_discount,
+      price_without_discount,
+      discount_percentage,
+      shipment,
+      description,
+      author,
     };
   },
 });

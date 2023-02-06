@@ -53,14 +53,14 @@
 
 .left-side {
   background: white;
-  width: 15%;
+  width: 20%;
   margin: 5px 0;
   height: fit-content;
 }
 
 .center-side {
   background: white;
-  width: 65%;
+  width: 60%;
   margin: 5px;
 }
 
@@ -170,6 +170,7 @@
 import FilterDealsComponent from '../components/FilterDealsComponent.vue';
 import DealsCardComponent from '../components/DealsCardComponent.vue';
 import HighlightComponent from '../components/HighlightComponent.vue';
+import '/node_modules/flag-icons/css/flag-icons.min.css';
 export default {
   name: 'MainLayout',
 
