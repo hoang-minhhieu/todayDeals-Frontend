@@ -1,5 +1,5 @@
 <template>
-  <q-expansion-item expand-separator label="Web mua bán trực tuyến">
+  <q-expansion-item expand-separator label="Web mua bán nổi bật">
     <q-card>
       <q-list bordered separator>
         <q-item tag="label" v-ripple v-for="x in visibleMerchants" :key="x">

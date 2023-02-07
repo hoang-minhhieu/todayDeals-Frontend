@@ -10,7 +10,7 @@
 <template>
   <div class="q-pa-md">
     <q-list bordered separator class="rounded-borders">
-      <q-checkbox left-label v-model="right" label="Ẩn khuyến mãi hết hạn" />
+      <q-checkbox left-label v-model="right" label="Ẩn hết hạn" />
       <q-separator />
       <FilterByTrendComponent></FilterByTrendComponent>
       <FilterByCategoryComponent></FilterByCategoryComponent>
