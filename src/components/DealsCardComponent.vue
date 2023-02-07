@@ -8,12 +8,11 @@
   border: 2px solid black;
   width: fit-content;
   border-radius: 5px;
-  margin: 15px 30px 15px 0px;
+  margin: 15px 20px 15px 0px;
   right: 0;
-  top: 0;
   position: absolute;
   display: flex;
-  width: 110px;
+  width: 130px;
 }
 
 .voteCount {
@@ -138,8 +137,8 @@
                   {{ title }}
                 </div>
                 <div class="prices">
-                  <div class="discountPrice">{{ price_with_discount }}€</div>
-                  <div class="fullPrice">{{ price_without_discount }}€</div>
+                  <div class="discountPrice">{{ price_with_discount }}</div>
+                  <div class="fullPrice">{{ price_without_discount }}</div>
                   <div class="discountPercentage">
                     (Giảm {{ discount_percentage }}%)
                   </div>
@@ -148,7 +147,7 @@
                       name="local_shipping"
                       style="font-size: xx-large"
                     ></q-icon
-                    >{{ shipment }}€
+                    >{{ shipment }}
                   </div>
                 </div>
                 <div class="description">
@@ -211,9 +210,9 @@ export default defineComponent({
     });
     const expire = '05/02/2023';
     const title = 'Tên sản phẩm';
-    const price_with_discount = 5;
-    const price_without_discount = 10;
-    const shipment = 5;
+    const price_with_discount = 50000;
+    const price_without_discount = 100000;
+    const shipment = 5000;
     const description = 'This is a description';
     const author = 'James';
     const discount_percentage = Math.round(
@@ -227,6 +226,14 @@ export default defineComponent({
 
     function downvote() {
       voteCount.value--;
+    }
+
+    function toCurrency(value: number) {
+      var formatter = new Intl.NumberFormat('de-DE', {
+        style: 'currency',
+        currency: 'VND',
+      });
+      return formatter.format(value);
     }
 
     return {
@@ -244,10 +251,10 @@ export default defineComponent({
       expire,
       today: today.replace(/(\d+)\/(\d+)\/(\d+)/, '$2/$1/$3'),
       title,
-      price_with_discount,
-      price_without_discount,
+      price_with_discount: toCurrency(price_with_discount),
+      price_without_discount: toCurrency(price_without_discount),
       discount_percentage,
-      shipment,
+      shipment: toCurrency(shipment),
       description,
       author,
     };
