@@ -181,13 +181,13 @@
                 <q-btn
                   color="primary"
                   @click="downvote"
-                  label="Chia sẻ"
-                  icon="mdi-share"
+                  label="Lưu"
+                  icon="bookmark"
                 />
                 <q-btn
                   color="primary"
                   @click="downvote"
-                  label="Xem thêm"
+                  label="Xem"
                   icon="open_in_new"
                 />
               </div>
