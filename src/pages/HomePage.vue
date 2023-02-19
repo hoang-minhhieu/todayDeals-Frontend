@@ -3,9 +3,31 @@
   display: flex;
   margin-right: auto;
   margin-left: auto;
-  width: 65vw;
-  background-color: black;
+  width: 50vw;
+  background-color: $headerColor;
   height: 60px;
+  padding: 0;
+  .q-tabs {
+    .q-tab__label {
+      font-size: 0.9em;
+    }
+  }
+}
+
+.filterTabsBar {
+  background-color: $filterTabs;
+  padding: 0;
+  .q-tabs {
+    padding: 0;
+    margin-right: auto;
+    margin-left: auto;
+    width: 50vw;
+    background-color: $filterTabs;
+    color: white;
+    .q-tab__label {
+      font-size: 0.9em;
+    }
+  }
 }
 
 .navbarBtn {
@@ -22,13 +44,6 @@
   display: flex;
 }
 
-.q-tabs {
-  background-color: #f7941d;
-  .q-tab__label {
-    font-size: 0.9em;
-  }
-}
-
 .searchBar {
   width: 300px;
 }
@@ -38,7 +53,7 @@
 }
 
 .q-page-container {
-  width: 65vw;
+  width: 50vw;
   margin-left: auto;
   margin-right: auto;
 }
@@ -51,23 +66,16 @@
   align-self: center;
 }
 
-.left-side {
-  background: white;
-  width: 20%;
-  margin: 5px 0;
-  height: fit-content;
-}
-
 .center-side {
-  background: $bgColor;
-  width: 60%;
+  background: $backgroundColor;
+  width: 75%;
   margin: 5px;
 }
 
 .right-side {
   background: white;
-  width: 20%;
-  margin: 5px 0;
+  width: 25%;
+  margin: 8px 0;
   height: fit-content;
 }
 </style>
@@ -75,8 +83,8 @@
 <template>
   <q-layout view="hHh lpR fFf" style="background: #e3e6e6">
     <q-header class="bg-black text-white">
-      <div class="header">
-        <q-tabs no-caps>
+      <q-toolbar class="header">
+        <q-tabs align="left" no-caps>
           <q-tab name="images" label="Khuyến mãi" />
           <q-tab name="videos" label="Mã giảm giá" />
           <q-tab name="articles" label="Miễn phí" />
@@ -137,21 +145,26 @@
             <div>Đăng nhập</div>
           </q-btn>
         </div>
-      </div>
+      </q-toolbar>
+
+      <q-toolbar class="filterTabsBar">
+        <q-tabs align="left" no-caps>
+          <q-route-tab to="/page1" label="Mới nhất" />
+          <q-route-tab to="/page2" label="Nổi bật" />
+        </q-tabs>
+      </q-toolbar>
     </q-header>
 
     <q-page-container>
+      <HighlightComponent></HighlightComponent>
       <q-page class="full-height" id="page" style="display: flex">
-        <div class="left-side">
-          <FilterDealsComponent></FilterDealsComponent>
-        </div>
         <div class="center-side">
           <div name="tab1" :style="heightStyle">
             <DealsCardComponent></DealsCardComponent>
           </div>
         </div>
         <div class="right-side">
-          <HighlightComponent></HighlightComponent>
+          <FilterDealsComponent></FilterDealsComponent>
         </div>
       </q-page>
     </q-page-container>
