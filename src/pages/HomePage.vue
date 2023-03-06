@@ -1,4 +1,7 @@
 <style scoped lang="scss">
+.q-layout {
+  background: $backgroundColor;
+}
 .header {
   display: flex;
   margin-right: auto;
@@ -8,6 +11,7 @@
   height: 60px;
   padding: 0;
   .q-tabs {
+    margin-left: 3px;
     .q-tab__label {
       font-size: 0.9em;
     }
@@ -17,6 +21,7 @@
 .filterTabsBar {
   background-color: $filterTabs;
   padding: 0;
+  margin-left: 3px;
   .q-tabs {
     padding: 0;
     margin-right: auto;
@@ -26,6 +31,11 @@
     color: white;
     .q-tab__label {
       font-size: 0.9em;
+    }
+
+    .q-checkbox {
+      right: 0;
+      position: absolute;
     }
   }
 }
@@ -69,27 +79,38 @@
 .center-side {
   background: $backgroundColor;
   width: 75%;
-  margin: 5px;
 }
 
 .right-side {
-  background: white;
   width: 25%;
-  margin: 8px 0;
   height: fit-content;
+  margin: 3px 0 0 5px;
+}
+
+.right-side-top {
+  background: white;
+}
+
+.right-side-bot {
+  background: white;
+  margin-top: 8px;
+}
+
+.q-footer {
+  background-color: $filterTabs;
 }
 </style>
 
 <template>
-  <q-layout view="hHh lpR fFf" style="background: #e3e6e6">
+  <q-layout view="hHh lpR fFf">
     <q-header class="bg-black text-white">
       <q-toolbar class="header">
         <q-tabs align="left" no-caps>
-          <q-tab name="images" label="Khuyến mãi" />
-          <q-tab name="videos" label="Mã giảm giá" />
-          <q-tab name="articles" label="Miễn phí" />
-          <q-tab name="events" label="Sự kiện" />
-          <q-tab name="forum" label="Diễn đàn" />
+          <q-route-tab :label="translations.header.deals" />
+          <q-route-tab :label="translations.header.coupons" />
+          <q-route-tab :label="translations.header.free" />
+          <q-route-tab :label="translations.header.event" />
+          <q-route-tab :label="translations.header.discussion" />
         </q-tabs>
 
         <q-input
@@ -99,7 +120,7 @@
           color="navy"
           bg-color="white"
           rounded
-          placeholder="Tìm kiếm"
+          :placeholder="translations.search"
           :class="'searchBar'"
           dense
         >
@@ -120,18 +141,18 @@
           <q-btn-dropdown
             no-caps
             :class="'navbarBtn'"
-            label="Ngôn ngữ"
+            :label="translations.languages"
             icon="language"
           >
             <q-list>
-              <q-item clickable v-close-popup @click="onItemClick">
+              <q-item clickable v-close-popup @click="switchLanguage('vn')">
                 <q-item-section>
                   <span class="fi fi-vn"></span>
                   <q-item-label>Tiếng Việt</q-item-label>
                 </q-item-section>
               </q-item>
 
-              <q-item clickable v-close-popup @click="onItemClick">
+              <q-item clickable v-close-popup @click="switchLanguage('en')">
                 <q-item-section>
                   <span class="fi fi-gb"></span>
                   <q-item-label>English</q-item-label>
@@ -142,15 +163,22 @@
 
           <q-btn no-caps :class="'navbarBtn'" color="primary">
             <q-icon name="person" />
-            <div>Đăng nhập</div>
+            <div>{{ translations.login }}</div>
           </q-btn>
         </div>
       </q-toolbar>
 
       <q-toolbar class="filterTabsBar">
         <q-tabs align="left" no-caps>
-          <q-route-tab to="/page1" label="Mới nhất" />
-          <q-route-tab to="/page2" label="Nổi bật" />
+          <q-tab to="/page1" :label="translations.tabs.newest" />
+          <q-tab to="/page2" :label="translations.tabs.hot" />
+          <q-checkbox
+            keep-color
+            dark
+            left-label
+            v-model="right"
+            :label="translations.hideExpired"
+          />
         </q-tabs>
       </q-toolbar>
     </q-header>
@@ -159,20 +187,23 @@
       <HighlightComponent></HighlightComponent>
       <q-page class="full-height" id="page" style="display: flex">
         <div class="center-side">
-          <div name="tab1" :style="heightStyle">
-            <DealsCardComponent></DealsCardComponent>
-          </div>
+          <DealsCardComponent></DealsCardComponent>
         </div>
         <div class="right-side">
-          <FilterDealsComponent></FilterDealsComponent>
+          <div class="right-side-top">
+            <FilterDealsComponent></FilterDealsComponent>
+          </div>
+          <div class="right-side-bot">
+            <TopDiscussionComponent></TopDiscussionComponent>
+          </div>
         </div>
       </q-page>
     </q-page-container>
 
-    <q-footer class="bg-grey-8 text-white">
+    <q-footer>
       <q-toolbar>
         <q-toolbar-title>
-          <div>Title</div>
+          <div>Footer</div>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
@@ -181,28 +212,38 @@
 
 <script>
 import FilterDealsComponent from '../components/FilterDealsComponent.vue';
+import TopDiscussionComponent from '../components/TopDiscussionComponent.vue';
 import DealsCardComponent from '../components/DealsCardComponent.vue';
 import HighlightComponent from '../components/HighlightComponent.vue';
+import { ref } from 'vue';
 import '/node_modules/flag-icons/css/flag-icons.min.css';
+import constants from '../constants/constants';
+import translations from '../locales/translations';
+
 export default {
   name: 'MainLayout',
 
-  components: { FilterDealsComponent, DealsCardComponent, HighlightComponent },
-  mounted() {
-    this.setHeight();
-  },
-  methods: {
-    setHeight() {
-      const panelTop = document.getElementById('page').offsetTop;
-      const panelHeight = window.innerHeight - panelTop - 60;
-      this.heightStyle = 'height: ' + panelHeight + 'px';
-    },
+  components: {
+    FilterDealsComponent,
+    TopDiscussionComponent,
+    DealsCardComponent,
+    HighlightComponent,
   },
   data() {
     return {
+      translations: translations[constants.getCurrentLanguage()],
       search: '',
-      heightStyle: '',
+      right: ref(false),
     };
+  },
+
+  methods: {
+    switchLanguage(language) {
+      // Set the currentLanguage property in the config.js file to the new language
+      constants.setCurrentLanguage(language);
+      // Reload the page to see the changes
+      this.translations = translations[language];
+    },
   },
 };
 </script>

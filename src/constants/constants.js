@@ -1,3 +1,13 @@
+export default {
+  currentLanguage: 'en',
+  setCurrentLanguage(language) {
+    this.currentLanguage = language;
+  },
+  getCurrentLanguage() {
+    return this.currentLanguage;
+  },
+};
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export const trends = ['Mới nhất', 'Đáng chú ý', 'Đang bình luận'];
 
