@@ -6,8 +6,7 @@
 }
 
 .q-card--bordered {
-  border: 3px solid rgba(0, 0, 0, 0.12);
-  border-radius: 5px;
+  border: 3px solid $backgroundColor;
 }
 
 .voteDeals {
@@ -109,99 +108,97 @@
 }
 </style>
 <template>
-  <q-scroll-area class="fit">
-    <q-infinite-scroll @load="onLoad" :offset="250">
-      <div v-for="(item, index) in items" :key="index" class="caption">
-        <q-card flat bordered>
-          <q-card-section class="my-card" horizontal>
-            <q-card-section class="voteDeals">
-              <div style="display: grid">
-                <q-btn
-                  class="voteBtn"
-                  flat
-                  color="red"
-                  @click="upvote"
-                  icon="add"
-                  size="large"
-                />
-                <div
-                  class="voteCount"
-                  :style="{ color: voteCount > 0 ? 'red' : '#1976D2' }"
-                >
-                  {{ voteCount == 0 ? 'Vote' : `${voteCount}°` }}
-                </div>
-                <q-btn
-                  class="voteBtn"
-                  flat
-                  color="primary"
-                  @click="downvote"
-                  icon="remove"
-                  size="large"
-                />
-              </div>
-            </q-card-section>
-            <q-card-section class="dealImg">
-              <q-img
-                src="https://cdn.quasar.dev/img/parallax2.jpg"
-                style="position: initial"
+  <q-infinite-scroll @load="onLoad" :offset="250">
+    <div v-for="(item, index) in items" :key="index" class="caption">
+      <q-card flat bordered>
+        <q-card-section class="my-card" horizontal>
+          <q-card-section class="voteDeals">
+            <div style="display: grid">
+              <q-btn
+                class="voteBtn"
+                flat
+                color="red"
+                @click="upvote"
+                icon="add"
+                size="large"
               />
-            </q-card-section>
-            <q-card-section class="cardContents">
-              <div class="title ellipsis">
-                {{ title }}
+              <div
+                class="voteCount"
+                :style="{ color: voteCount > 0 ? 'red' : '#1976D2' }"
+              >
+                {{ voteCount == 0 ? 'Vote' : `${voteCount}°` }}
               </div>
-              <div class="prices">
-                <div class="discountPrice">{{ price_with_discount }}</div>
-                <div class="fullPrice">{{ price_without_discount }}</div>
-                <div class="discountPercentage">
-                  (Giảm {{ discount_percentage }}%)
-                </div>
-                <div class="shipmentCost">
-                  <q-icon
-                    name="local_shipping"
-                    style="font-size: xx-large"
-                  ></q-icon
-                  >{{ shipment }}
-                </div>
-              </div>
-              <div class="description ellipsis">
-                {{ description }}
-              </div>
-              <div class="lastRowBtns">
-                <div class="author">
-                  <q-chip>
-                    <q-avatar>
-                      <img :src="avatar" />
-                    </q-avatar>
-                    {{ author }}
-                  </q-chip>
-                  <div class="timeDiff">{{ timeDiff }}</div>
-                </div>
-                <div class="expireDate">HSD: {{ expire }}</div>
-                <q-btn
-                  color="primary"
-                  @click="downvote"
-                  label="Chia sẻ"
-                  icon="mdi-share"
-                />
-                <q-btn
-                  color="primary"
-                  @click="downvote"
-                  label="Xem thêm"
-                  icon="open_in_new"
-                />
-              </div>
-            </q-card-section>
+              <q-btn
+                class="voteBtn"
+                flat
+                color="primary"
+                @click="downvote"
+                icon="remove"
+                size="large"
+              />
+            </div>
           </q-card-section>
-        </q-card>
+          <q-card-section class="dealImg">
+            <q-img
+              src="https://cdn.quasar.dev/img/parallax2.jpg"
+              style="position: initial"
+            />
+          </q-card-section>
+          <q-card-section class="cardContents">
+            <div class="title ellipsis">
+              {{ title }}
+            </div>
+            <div class="prices">
+              <div class="discountPrice">{{ price_with_discount }}</div>
+              <div class="fullPrice">{{ price_without_discount }}</div>
+              <div class="discountPercentage">
+                (Giảm {{ discount_percentage }}%)
+              </div>
+              <div class="shipmentCost">
+                <q-icon
+                  name="local_shipping"
+                  style="font-size: xx-large"
+                ></q-icon
+                >{{ shipment }}
+              </div>
+            </div>
+            <div class="description ellipsis">
+              {{ description }}
+            </div>
+            <div class="lastRowBtns">
+              <div class="author">
+                <q-chip>
+                  <q-avatar>
+                    <img :src="avatar" />
+                  </q-avatar>
+                  {{ author }}
+                </q-chip>
+                <div class="timeDiff">{{ timeDiff }}</div>
+              </div>
+              <div class="expireDate">HSD: {{ expire }}</div>
+              <q-btn
+                color="primary"
+                @click="downvote"
+                label="Chia sẻ"
+                icon="mdi-share"
+              />
+              <q-btn
+                color="primary"
+                @click="downvote"
+                label="Xem thêm"
+                icon="open_in_new"
+              />
+            </div>
+          </q-card-section>
+        </q-card-section>
+      </q-card>
+    </div>
+    <template v-slot:loading>
+      <div class="row justify-center q-my-md">
+        <q-spinner-dots color="primary" size="40px" />
       </div>
-      <template v-slot:loading>
-        <div class="row justify-center q-my-md">
-          <q-spinner-dots color="primary" size="40px" />
-        </div>
-      </template>
-    </q-infinite-scroll>
-  </q-scroll-area>
+    </template>
+  </q-infinite-scroll>
 </template>
 
 <script lang="ts">
@@ -258,7 +255,7 @@ export default defineComponent({
         setTimeout(() => {
           items.value.push({}, {}, {}, {}, {}, {}, {});
           done();
-        }, 2000);
+        }, 1000);
       },
       avatar,
       expire,
